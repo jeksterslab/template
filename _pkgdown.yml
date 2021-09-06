@@ -1,0 +1,13 @@
+destination: docs
+url: https://github.com/jeksterslab-r/template/
+
+reference:
+- title: Package
+  contents:
+  - has_keyword("package")
+- title: Functions
+  contents:
+  - has_concept("Template")
+- title: Data
+  contents:
+  - has_keyword("data")

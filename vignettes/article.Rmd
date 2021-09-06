@@ -1,0 +1,23 @@
+---
+title: "Article: Title"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Article: Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(template)
+```
+
+```{r}
+foo(x = 10, y = 10)
+```

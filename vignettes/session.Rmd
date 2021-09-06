@@ -1,0 +1,31 @@
+---
+title: "template: Session"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{template: Session}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(template)
+```
+
+# Session
+
+```{r}
+sessionInfo()
+```
+
+# Packages
+
+```{r}
+unname(installed.packages()[, 1])
+```
