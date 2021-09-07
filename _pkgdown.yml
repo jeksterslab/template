@@ -7,7 +7,7 @@ reference:
   - has_keyword("package")
 - title: Functions
   contents:
-  - has_concept("Template")
+  - has_concept("Template Functions")
 - title: Data
   contents:
   - has_keyword("data")

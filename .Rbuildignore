@@ -28,6 +28,3 @@
 ^.\.R$
 ^.\.sh$
 ^.*\.Rproj$
-^template\.Rcheck$
-^template.*\.tar\.gz$
-^template.*\.tgz$

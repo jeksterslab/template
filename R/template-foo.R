@@ -6,7 +6,7 @@
 #' @param x Numeric.
 #' @param y Numeric.
 #' @export
-#' @family Template
+#' @family Template Functions
 #' @keywords template
 foo <- function(x, y) {
   stopifnot(

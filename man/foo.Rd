@@ -17,5 +17,5 @@ Sum function.
 \author{
 Ivan Jacob Agaloos Pesigan
 }
-\concept{Template}
+\concept{Template Functions}
 \keyword{template}
