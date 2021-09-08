@@ -1,5 +1,6 @@
 ---
 title: "template: Session"
+author: "Ivan Jacob Agaloos Pesigan"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{template: Session}
