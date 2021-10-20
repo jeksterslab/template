@@ -22,8 +22,8 @@
 ^\.gitignore$
 ^\.library$
 ^\.notes$
-^\.references$
 ^\.vimrc$
+^bib$
 ^data_raw$
 ^docs$
 ^latex$

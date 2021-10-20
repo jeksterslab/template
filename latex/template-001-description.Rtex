@@ -2,8 +2,9 @@
 
 \input{latex/preamble/preamble}
 
-\title{Session Info}
+\title{template: Title}
 \author{Ivan Jacob Agaloos Pesigan}
+\date{}
 
 \begin{document}
 
@@ -20,16 +21,8 @@ source(
 )
 @
 
-\section{Session}
+\section*{Description}
 
-<<>>=
-sessionInfo()
-@
-
-\section{Packages}
-
-<<>>=
-unname(installed.packages()[, 1])
-@
+A collection of functions...
 
 \end{document}
