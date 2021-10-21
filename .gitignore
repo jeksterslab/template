@@ -41,3 +41,6 @@
 
 # .bashrc_secrets
 .bash_secrets
+
+# clone github repo script
+.clone.sh
