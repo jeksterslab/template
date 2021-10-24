@@ -10,6 +10,8 @@
 
 \maketitle
 
+\section*{Internal Tests}
+
 <<echo=FALSE>>=
 root <- rprojroot::is_rstudio_project
 source(
@@ -17,6 +19,18 @@ source(
     "latex",
     "R_scripts",
     "tests.R"
+  )
+)
+@
+
+\section*{External Tests}
+
+<<echo=FALSE>>=
+source(
+  root$find_file(
+    "latex",
+    "R_scripts",
+    "tests_external.R"
   )
 )
 @

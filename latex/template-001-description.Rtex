@@ -25,4 +25,21 @@ source(
 
 A collection of functions...
 
+\section*{Installation}
+
+You can install the released version of `template` from
+\href{https://github.com/jeksterslab/template}{GitHub}
+with:
+
+<<eval = FALSE>>=
+install.packages("remotes")
+remotes::install_github("jeksterslab/template")
+@
+
+\section*{More Information}
+
+See
+\href{https://jeksterslab.github.io/template/index.html}{GitHub Pages}
+for package documentation.
+
 \end{document}

@@ -10,7 +10,8 @@ pkg <- c(
   "rmarkdown",
   "rprojroot",
   "styler",
-  "testthat"
+  "testthat",
+  "microbenchmark"
 )
 for (i in seq_along(pkg)) {
   if (!(pkg[i] %in% installed)) {

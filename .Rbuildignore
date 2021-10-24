@@ -29,3 +29,4 @@
 ^latex$
 ^latexmkrc$
 ^R_dependencies$
+^tests_external$
