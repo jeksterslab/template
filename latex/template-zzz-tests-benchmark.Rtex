@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\input{latex/preamble/preamble}
+
+\title{template: Benchmarks}
+\author{Ivan Jacob Agaloos Pesigan}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+<<echo=FALSE>>=
+root <- rprojroot::is_rstudio_project
+source(
+  root$find_file(
+    "latex",
+    "R_scripts",
+    "start.R"
+  )
+)
+@
+
+\section{foo}
+
+<<echo=FALSE, cache=FALSE>>=
+knitr::read_chunk(
+  root$find_file(
+    "tests_benchmark",
+    "test-benchmark-template-foo.R"
+  )
+)
+@
+
+<<test-benchmark-template-foo>>=
+@
+
+\newpage
+
+\section*{Environment}
+
+<<>>=
+ls()
+@
+
+\section*{Class}
+
+<<>>=
+obj_i <- lapply(
+  X = ls(),
+  FUN = function(x) eval(parse(text = x))
+)
+unique(
+  lapply(
+    X = obj_i,
+    FUN = class
+  )
+)
+@
+
+\newpage
+
+\section*{Session - Overleaf}
+
+<<>>=
+sessionInfo()
+@
+
+\end{document}

@@ -30,3 +30,4 @@
 ^latexmkrc$
 ^R_dependencies$
 ^tests_external$
+^tests_benchmark$

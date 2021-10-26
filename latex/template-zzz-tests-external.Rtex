@@ -2,7 +2,7 @@
 
 \input{latex/preamble/preamble}
 
-\title{template: Tests}
+\title{template: External Tests}
 \author{Ivan Jacob Agaloos Pesigan}
 \date{}
 
@@ -10,22 +10,8 @@
 
 \maketitle
 
-\section*{Internal Tests}
-
 <<echo=FALSE>>=
 root <- rprojroot::is_rstudio_project
-source(
-  root$find_file(
-    "latex",
-    "R_scripts",
-    "tests.R"
-  )
-)
-@
-
-\section*{External Tests}
-
-<<echo=FALSE>>=
 source(
   root$find_file(
     "latex",

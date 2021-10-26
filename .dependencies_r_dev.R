@@ -11,7 +11,8 @@ pkg <- c(
   "rprojroot",
   "styler",
   "testthat",
-  "microbenchmark"
+  "microbenchmark",
+  "ggplot2"
 )
 for (i in seq_along(pkg)) {
   if (!(pkg[i] %in% installed)) {
