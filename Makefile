@@ -2,22 +2,25 @@
 
 all: clean build
 
-doc: README.Rmd R/*
+doc: README.Rmd R/* R_dependencies/*
 	Rscript .dependencies_r_dev.R
 	Rscript .dependencies_r_pkg.R
+	cp R_dependencies/*.R R
 	Rscript -e "rmarkdown::render('README.Rmd')"
 	Rscript -e "devtools::document()"
 
-check: README.Rmd R/*
+check: README.Rmd R/* R_dependencies/*
 	Rscript .dependencies_r_dev.R
 	Rscript .dependencies_r_pkg.R
+	cp R_dependencies/*.R R
 	Rscript -e "rmarkdown::render('README.Rmd')"
 	Rscript -e "devtools::document()"
 	Rscript -e "devtools::check(cran = FALSE)"
 
-cran: README.Rmd R/*
+cran: README.Rmd R/* R_dependencies/*
 	Rscript .dependencies_r_dev.R
 	Rscript .dependencies_r_pkg.R
+	cp R_dependencies/*.R R
 	Rscript -e "rmarkdown::render('README.Rmd')"
 	Rscript -e "devtools::document()"
 	Rscript -e "devtools::check()"
@@ -27,6 +30,7 @@ style:
 
 lint:
 	Rscript -e "lintr::lint_dir('R')"
+	Rscript -e "lintr::lint_dir('R_dependencies')"
 	Rscript -e "lintr::lint_dir('tests')"
 
 cov:
@@ -49,6 +53,7 @@ build:
 	Rscript .dependencies_r_dev.R
 	Rscript .dependencies_r_pkg.R
 	Rscript -e "styler::style_dir(exclude_dirs = '.library', filetype = c('.R', '.Rmd'))"
+	cp R_dependencies/*.R R
 	Rscript -e "rmarkdown::render('README.Rmd')"
 	Rscript -e "devtools::document()"
 	Rscript -e "devtools::check(cran = FALSE)"

@@ -1,16 +1,20 @@
 ## ---- test-external-template-foo
-x_i <- rnorm(n = 1)
-y_i <- rnorm(n = 1)
-testthat::test_that(
-  "test-external-template-foo",
-  {
-    testthat::expect_equal(
-      foo(x_i, y_i),
-      x_i + y_i
+lapply(
+  X = 1,
+  FUN = function(i,
+                 text) {
+    message(text)
+    x <- rnorm(n = 1)
+    y <- rnorm(n = 1)
+    testthat::test_that(
+      text,
+      {
+        testthat::expect_equal(
+          foo(x, y),
+          x + y
+        )
+      }
     )
-  }
-)
-rm(
-  x_i,
-  y_i
+  },
+  text = "test-external-template-foo"
 )

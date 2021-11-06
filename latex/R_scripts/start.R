@@ -6,30 +6,38 @@ Sys.setenv(R_LIBS_USER = ".library")
 R_dependencies_folder <- root$find_file(
   "R_dependencies"
 )
-script_files <- list.files(
+R_dependencies_files <- list.files(
   R_dependencies_folder,
   pattern = "\\.R$",
   full.names = TRUE,
   all.files = TRUE
 )
-for (i in script_files) {
-  source(i)
-}
-rm(i, script_files, R_dependencies_folder)
+lapply(
+  X = R_dependencies_files,
+  FUN = source
+)
+rm(
+  R_dependencies_files,
+  R_dependencies_folder
+)
 # source all scripts in R/
 R_folder <- root$find_file(
   "R"
 )
-script_files <- list.files(
+R_files <- list.files(
   R_folder,
   pattern = "\\.R$",
   full.names = TRUE,
   all.files = TRUE
 )
-for (i in script_files) {
-  source(i)
-}
-rm(i, script_files, R_folder)
+lapply(
+  X = R_files,
+  FUN = source
+)
+rm(
+  R_files,
+  R_folder
+)
 # load all data in data/
 data_folder <- root$find_file(
   "data"
@@ -41,9 +49,12 @@ if (dir.exists(data_folder)) {
     full.names = TRUE,
     all.files = TRUE
   )
-  for (i in data_files) {
-    load(i)
+  for (i in seq_along(data_files)) {
+    load(data_files[i])
   }
-  rm(i, data_files)
+  rm(
+    i,
+    data_files
+  )
 }
 rm(data_folder)

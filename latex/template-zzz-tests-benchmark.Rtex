@@ -32,7 +32,7 @@ knitr::read_chunk(
 )
 @
 
-<<test-benchmark-template-foo>>=
+<<test-benchmark-template-foo, echo=FALSE>>=
 @
 
 \newpage
