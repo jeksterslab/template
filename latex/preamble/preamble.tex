@@ -1,33 +1,21 @@
-% utf8 characters
-\usepackage[utf8]{inputenc}
+\input{latex/preamble/000-preamble-first}
 
-% maths
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}
-\newtheorem{definition}{Definition}[theorem]
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
+\input{latex/preamble/001-preamble-encoding}
 
-% bold math
-\usepackage{bm}
-% The following remaps \boldsymbol and \mathbf to \bm
-\renewcommand{\boldsymbol}[1]{\bm{#1}}
-\renewcommand{\mathbf}[1]{\bm{#1}}
+\input{latex/preamble/002-preamble-math}
 
-% graphics
-\usepackage{graphicx}
+\input{latex/preamble/003-preamble-tables}
 
-% tables
-\usepackage{booktabs}
+\input{latex/preamble/004-preamble-figures}
 
-% hyperlinks
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks = true,
-    linkcolor  = red,
-    citecolor = black,
-    urlcolor   = blue
-}
+\input{latex/preamble/005-preamble-margins}
+
+\input{latex/preamble/006-preamble-spacing}
+
+\input{latex/preamble/007-preamble-sections}
+
+\input{latex/preamble/008-preamble-ref}
+
+%\input{latex/preamble/references}
+
+\input{latex/preamble/999-preamble-last}

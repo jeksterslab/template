@@ -2,6 +2,8 @@
 
 \input{latex/preamble/preamble}
 
+\renewcommand{\baselinestretch}{1}
+
 \title{template: Benchmarks}
 \author{Ivan Jacob Agaloos Pesigan}
 \date{}
