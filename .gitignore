@@ -44,3 +44,6 @@
 
 # clone github repo script
 .clone.sh
+
+# doc
+doc/*
