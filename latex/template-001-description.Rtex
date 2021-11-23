@@ -2,7 +2,7 @@
 
 \input{latex/preamble/preamble}
 
-\title{template: Title}
+\title{template: Template}
 \author{Ivan Jacob Agaloos Pesigan}
 \date{}
 
@@ -27,7 +27,9 @@ A collection of functions...
 
 \section*{Installation}
 
-You can install the released version of `template` from
+You can install the released version of
+\texttt{template}
+from
 \href{https://github.com/jeksterslab/template}{GitHub}
 with:
 
@@ -41,5 +43,9 @@ remotes::install_github("jeksterslab/template")
 See
 \href{https://jeksterslab.github.io/template/index.html}{GitHub Pages}
 for package documentation.
+
+\nocite{R-2021}
+
+\printbibliography
 
 \end{document}

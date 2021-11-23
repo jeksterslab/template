@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jeksterslab/template/workflows/R-CMD-check/badge.svg)](https://github.com/jeksterslab/template/actions)
+[![codecov](https://codecov.io/gh/jeksterslab/template/branch/main/graph/badge.svg)](https://codecov.io/gh/jeksterslab/template)
 <!-- badges: end -->
 
 ## Description
