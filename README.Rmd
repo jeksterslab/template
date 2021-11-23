@@ -27,7 +27,10 @@ A collection of functions...
 
 ## Installation
 
-You can install the released version of `template` from [GitHub](https://github.com/jeksterslab/template) with:
+You can install the released version of
+`template`
+from
+[GitHub](https://github.com/jeksterslab/template) with:
 
 ```r
 install.packages("remotes")
@@ -36,5 +39,6 @@ remotes::install_github("jeksterslab/template")
 
 ## More Information
 
-See [GitHub Pages](https://jeksterslab.github.io/template/index.html)
+See
+[GitHub Pages](https://jeksterslab.github.io/template/index.html)
 for package documentation.
