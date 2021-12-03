@@ -1,0 +1,148 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\input{latex/preamble/preamble}
+
+\title{Session Info}
+\author{Ivan Jacob Agaloos Pesigan}
+\date{}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+
+
+
+
+
+\section*{Session}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{sessionInfo}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+#> R version 4.1.2 (2021-11-01)
+#> Platform: x86_64-pc-linux-gnu (64-bit)
+#> Running under: Ubuntu 20.04.3 LTS
+#> 
+#> Matrix products: default
+#> BLAS:   /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3
+#> LAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3
+#> 
+#> locale:
+#>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+#>  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+#>  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+#> [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+#> 
+#> attached base packages:
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
+#> 
+#> loaded via a namespace (and not attached):
+#>  [1] compiler_4.1.2  magrittr_2.0.1  rprojroot_2.0.2 tools_4.1.2    
+#>  [5] stringi_1.7.6   highr_0.9       knitr_1.36      stringr_1.4.0  
+#>  [9] xfun_0.28       evaluate_0.14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Packages}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{unname}\hlstd{(}\hlkwd{installed.packages}\hlstd{()[,} \hlnum{1}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+#>   [1] "askpass"        "backports"      "base64enc"      "brew"          
+#>   [5] "brio"           "bslib"          "cachem"         "callr"         
+#>   [9] "cli"            "clipr"          "colorspace"     "commonmark"    
+#>  [13] "covr"           "cpp11"          "crayon"         "credentials"   
+#>  [17] "curl"           "cyclocomp"      "desc"           "devtools"      
+#>  [21] "diffobj"        "digest"         "downlit"        "ellipsis"      
+#>  [25] "evaluate"       "fansi"          "farver"         "fastmap"       
+#>  [29] "fs"             "gert"           "ggplot2"        "gh"            
+#>  [33] "gitcreds"       "glue"           "gtable"         "highr"         
+#>  [37] "htmltools"      "httr"           "ini"            "isoband"       
+#>  [41] "jquerylib"      "jsonlite"       "knitr"          "labeling"      
+#>  [45] "lazyeval"       "lifecycle"      "lintr"          "magrittr"      
+#>  [49] "memoise"        "microbenchmark" "mime"           "munsell"       
+#>  [53] "openssl"        "pillar"         "pkgbuild"       "pkgconfig"     
+#>  [57] "pkgdown"        "pkgload"        "praise"         "prettyunits"   
+#>  [61] "processx"       "ps"             "purrr"          "R.cache"       
+#>  [65] "R.methodsS3"    "R.oo"           "R.utils"        "R6"            
+#>  [69] "ragg"           "rappdirs"       "rcmdcheck"      "RColorBrewer"  
+#>  [73] "rematch2"       "remotes"        "rex"            "rlang"         
+#>  [77] "rmarkdown"      "roxygen2"       "rprojroot"      "rstudioapi"    
+#>  [81] "rversions"      "sass"           "scales"         "sessioninfo"   
+#>  [85] "stringi"        "stringr"        "styler"         "sys"           
+#>  [89] "systemfonts"    "testthat"       "textshaping"    "tibble"        
+#>  [93] "tinytex"        "usethis"        "utf8"           "vctrs"         
+#>  [97] "viridisLite"    "waldo"          "whisker"        "withr"         
+#> [101] "xfun"           "xml2"           "xmlparsedata"   "xopen"         
+#> [105] "yaml"           "zip"            "base"           "boot"          
+#> [109] "class"          "cluster"        "codetools"      "compiler"      
+#> [113] "datasets"       "foreign"        "graphics"       "grDevices"     
+#> [117] "grid"           "KernSmooth"     "lattice"        "MASS"          
+#> [121] "Matrix"         "methods"        "mgcv"           "nlme"          
+#> [125] "nnet"           "parallel"       "rpart"          "spatial"       
+#> [129] "splines"        "stats"          "stats4"         "survival"      
+#> [133] "tcltk"          "tools"          "utils"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\end{document}

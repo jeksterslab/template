@@ -12,7 +12,22 @@
 
 \maketitle
 
-<<echo=FALSE>>=
+<<echo = FALSE>>=
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/latex-",
+  out.width = "100%"
+)
+@
+
+<<echo = FALSE>>=
+knitr::knit_hooks$set(
+  document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)}
+)
+@
+
+<<echo = FALSE>>=
 root <- rprojroot::is_rstudio_project
 source(
   root$find_file(
@@ -22,5 +37,7 @@ source(
   )
 )
 @
+
+Staging...
 
 \end{document}

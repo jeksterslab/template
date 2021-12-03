@@ -1,4 +1,4 @@
-.PHONY: all style lint cov tinytex archlinux cloud build clean xz data
+.PHONY: all style lint cov archlinux cloud build clean xz data latex
 
 all: clean build
 
@@ -36,9 +36,6 @@ lint:
 cov:
 	Rscript -e "covr::package_coverage()"
 
-tinytex:
-	Rscript .dependencies_tinytex.R
-
 archlinux: README.Rmd R/* vignettes/*
 	bash .dependencies_archlinux_dev.sh
 	bash .dependencies_archlinux_pkg.sh
@@ -66,9 +63,23 @@ xz:
 data:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data')"
 
+latex:
+	Rscript .latex_knit.R
+	latexmk -f -pdf -interaction=nonstopmode -output-directory="latex/pdf" latex/*.tex
+	@rm -rf latex/pdf/*.xml
+	@rm -rf latex/pdf/*.out
+	@rm -rf latex/pdf/*.log
+	@rm -rf latex/pdf/*.fls
+	@rm -rf latex/pdf/*.fdb_latexmk
+	@rm -rf latex/pdf/*.blg
+	@rm -rf latex/pdf/*.bcf
+	@rm -rf latex/pdf/*.bbl
+	@rm -rf latex/pdf/*.aux
+
 clean:
 	@rm -rf README.html
 	@rm -rf README.md
 	@rm -rf docs/*
 	@rm -rf man/*
 	@rm -rf NAMESPACE
+	@rm -rf latex/pdf/*.*
