@@ -40,4 +40,8 @@ source(
 
 Staging...
 
+\nocite{R-2021}
+
+\printbibliography
+
 \end{document}

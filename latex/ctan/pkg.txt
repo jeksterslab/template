@@ -1,0 +1,15 @@
+inputenc
+amsfonts
+amsmath
+amsthm
+booktabs
+graphicx
+pgf
+geometry
+setspace
+titlesec
+hyperref
+lipsum
+biblatex
+biblatex-apa
+apa7

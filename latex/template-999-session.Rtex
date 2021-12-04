@@ -48,4 +48,8 @@ sessionInfo()
 unname(installed.packages()[, 1])
 @
 
+\nocite{R-2021}
+
+\printbibliography
+
 \end{document}

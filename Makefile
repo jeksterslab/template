@@ -64,17 +64,7 @@ data:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data')"
 
 latex:
-	Rscript .latex_knit.R
-	latexmk -f -pdf -interaction=nonstopmode -output-directory="latex/pdf" latex/*.tex
-	@rm -rf latex/pdf/*.xml
-	@rm -rf latex/pdf/*.out
-	@rm -rf latex/pdf/*.log
-	@rm -rf latex/pdf/*.fls
-	@rm -rf latex/pdf/*.fdb_latexmk
-	@rm -rf latex/pdf/*.blg
-	@rm -rf latex/pdf/*.bcf
-	@rm -rf latex/pdf/*.bbl
-	@rm -rf latex/pdf/*.aux
+	Rscript -e "source('latex/R_scripts/.latex.R'); .latex(clean = TRUE)"
 
 clean:
 	@rm -rf README.html
