@@ -1,4 +1,4 @@
-#' foo
+#' Foo
 #'
 #' Sum function.
 #'
@@ -8,7 +8,7 @@
 #' @export
 #' @family Template Functions
 #' @keywords template
-foo <- function(x, y) {
+Foo <- function(x, y) {
   stopifnot(
     is.numeric(x),
     is.numeric(y)

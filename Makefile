@@ -1,61 +1,49 @@
-.PHONY: all style lint cov archlinux cloud build clean xz data latex
+.PHONY: all archlinux pkg deps style check cran site build install lint cov xz data latex clean term rclean
 
-all: clean build
+all: clean pkg deps style README.md man/*.Rd check site build install
 
-doc: README.Rmd R/* R_dependencies/*
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-	cp R_dependencies/*.R R
+README.md: README.Rmd R/*.R
 	Rscript -e "rmarkdown::render('README.Rmd')"
-	Rscript -e "devtools::document()"
 
-check: README.Rmd R/* R_dependencies/*
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-	cp R_dependencies/*.R R
-	Rscript -e "rmarkdown::render('README.Rmd')"
+man/*.Rd: R/*.R
 	Rscript -e "devtools::document()"
-	Rscript -e "devtools::check(cran = FALSE)"
+	
+archlinux:
+	bash .dependencies-archlinux-dev.sh
+	bash .dependencies-archlinux-pkg.sh
 
-cran: README.Rmd R/* R_dependencies/*
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-	cp R_dependencies/*.R R
-	Rscript -e "rmarkdown::render('README.Rmd')"
-	Rscript -e "devtools::document()"
-	Rscript -e "devtools::check()"
+pkg:
+	Rscript .dependencies-r-dev.R
+	Rscript .dependencies-r-pkg.R
+
+deps:
+	find R-dependencies -name \*.R -exec cp {} R \;
 
 style:
-	Rscript -e "styler::style_dir(exclude_dirs = '.library', filetype = c('.R', '.Rmd'))"
+	Rscript -e "styler::style_dir(exclude_dirs = c('.library', '.notes'), filetype = c('.R', '.Rmd'))"
+
+check:
+	Rscript -e "devtools::check(cran = FALSE)"
+
+cran:
+	Rscript -e "devtools::check()"
+
+site:
+	Rscript -e "pkgdown::build_site()"
+	
+build:
+	Rscript -e "devtools::build(path = '.')"
+
+install:
+	Rscript -e "devtools::install(pkg = '.')"
 
 lint:
 	Rscript -e "lintr::lint_dir('R')"
-	Rscript -e "lintr::lint_dir('R_dependencies')"
+	Rscript -e "lintr::lint_dir('R-dependencies')"
 	Rscript -e "lintr::lint_dir('tests')"
 
 cov:
 	Rscript -e "covr::package_coverage()"
-
-archlinux: README.Rmd R/* vignettes/*
-	bash .dependencies_archlinux_dev.sh
-	bash .dependencies_archlinux_pkg.sh
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-
-cloud: README.Rmd R/* vignettes/*
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-
-build:
-	Rscript .dependencies_r_dev.R
-	Rscript .dependencies_r_pkg.R
-	Rscript -e "styler::style_dir(exclude_dirs = '.library', filetype = c('.R', '.Rmd'))"
-	cp R_dependencies/*.R R
-	Rscript -e "rmarkdown::render('README.Rmd')"
-	Rscript -e "devtools::document()"
-	Rscript -e "devtools::check(cran = FALSE)"
-	Rscript -e "pkgdown::build_site()"
-	Rscript -e "devtools::build(path = '.')"
 
 xz:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data', compress = 'xz')"
@@ -64,7 +52,16 @@ data:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data')"
 
 latex:
-	Rscript -e "source('latex/R_scripts/.latex.R'); .latex(clean = TRUE)"
+	Rscript -e "source('latex/r-scripts/latex-make.R'); LatexMake(clean = TRUE)"
+
+term:
+	cp .bash* ~
+	cp .vim* ~
+	bash .vimplugins
+
+rclean:
+	rm -rf .library/*
+	Rscript -e "remove.packages(installed.packages(priority = 'NA'))"
 
 clean:
 	@rm -rf README.html
@@ -73,3 +70,5 @@ clean:
 	@rm -rf man/*
 	@rm -rf NAMESPACE
 	@rm -rf latex/pdf/*.*
+	@rm -rf data-process/*.Rds
+	@find tmp/ -type f -not -name '.gitignore'-delete

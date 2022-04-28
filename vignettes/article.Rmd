@@ -20,5 +20,5 @@ library(template)
 ```
 
 ```{r}
-foo(x = 10, y = 10)
+Foo(x = 10, y = 10)
 ```

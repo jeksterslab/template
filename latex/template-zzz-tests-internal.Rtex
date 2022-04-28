@@ -1,6 +1,23 @@
+<<include = FALSE>>=
+root <- rprojroot::is_rstudio_project
+source(
+  root$find_file(
+    "latex",
+    "r-scripts",
+    "knitr.R"
+  )
+)
+@
+
 \documentclass{article}
 
 \input{latex/preamble/preamble}
+
+\Sexpr{
+    .PreambleBiblatex(
+      path = root$find_file("bib")
+    )
+}
 
 \renewcommand{\baselinestretch}{1}
 
@@ -12,27 +29,13 @@
 
 \maketitle
 
-<<echo = FALSE>>=
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/latex-",
-  out.width = "100%"
-)
-@
+\section*{Tests}
 
-<<echo = FALSE>>=
-knitr::knit_hooks$set(
-  document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)}
-)
-@
-
-<<echo = FALSE>>=
-root <- rprojroot::is_rstudio_project
+<<>>=
 source(
   root$find_file(
     "latex",
-    "R_scripts",
+    "r-scripts",
     "tests.R"
   )
 )
@@ -47,19 +50,33 @@ ls()
 \section*{Class}
 
 <<>>=
-obj_i <- lapply(
-  X = ls(),
-  FUN = function(x) eval(parse(text = x))
-)
 unique(
   lapply(
-    X = obj_i,
-    FUN = class
+    X = ls(),
+    FUN = function(x) {
+      class(
+        eval(parse(text = x))
+      )
+    }
   )
 )
 @
 
-\nocite{R-2021}
+\newpage
+
+<<>>=
+lapply(
+  X = ls(),
+  FUN = function(x) {
+    paste(
+      class(x = eval(parse(text = x))),
+      x
+    )
+  }
+)
+@
+
+\nocite{Lib-R-Manual-2021}
 
 \printbibliography
 

@@ -223,3 +223,4 @@ shopt -s autocd
 
 #====[ path ]===================================================================
 export PATH="$HOME/.TinyTeX/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.julia/bin:$PATH"

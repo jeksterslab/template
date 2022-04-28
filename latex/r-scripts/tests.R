@@ -1,0 +1,32 @@
+# find root directory
+root <- rprojroot::is_rstudio_project
+# source start.R
+source(
+  root$find_file(
+    "latex",
+    "r-scripts",
+    "start.R"
+  )
+)
+# run tests
+lapply(
+  X = root$find_file(
+    "tests",
+    "testthat"
+  ),
+  FUN = function(x) {
+    x <- list.files(
+      path = x,
+      pattern = "\\.R$",
+      full.names = TRUE,
+      all.files = TRUE,
+      recursive = TRUE
+    )
+    if (length(x) > 0) {
+      lapply(
+        X = x,
+        FUN = source
+      )
+    }
+  }
+)

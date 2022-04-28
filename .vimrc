@@ -63,3 +63,6 @@ autocmd Filetype Rmd,rmd,R,r map <F6> :!echo<space>"require(styler);<space>style
 "====[ Colorscheme ]===========================================================
 set background=dark
 colorscheme default
+
+"====[ vim-slime ]=============================================================
+let g:slime_target = "vimterminal"

@@ -10,7 +10,7 @@ lapply(
       text,
       {
         testthat::expect_equal(
-          foo(x, y),
+          Foo(x, y),
           x + y
         )
       }
