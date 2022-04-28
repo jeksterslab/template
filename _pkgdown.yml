@@ -1,6 +1,9 @@
 destination: docs
 url: https://github.com/jeksterslab/template/
 
+template:
+  bootstrap: 5
+
 reference:
 - title: Package
   contents:

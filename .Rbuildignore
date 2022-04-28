@@ -27,3 +27,6 @@
 ^R-.*$
 ^tests-.*$
 ^tmp$
+^template\.Rcheck$
+^template.*\.tar\.gz$
+^template.*\.tgz$
