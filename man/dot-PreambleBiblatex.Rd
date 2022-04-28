@@ -44,4 +44,6 @@ Create Biblatex Preamble
 Ivan Jacob Agaloos Pesigan
 }
 \concept{Bibliography Functions}
+\keyword{format}
 \keyword{internal}
+\keyword{texTools}

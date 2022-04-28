@@ -22,7 +22,7 @@
 #' @returns Character string.
 #'
 #' @family Bibliography Functions
-#' @keywords internal
+#' @keywords texTools format internal
 .PreambleBiblatex <- function(path = "bib",
                               style = "apa",
                               sortcites = TRUE,

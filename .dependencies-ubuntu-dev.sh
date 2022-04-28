@@ -11,6 +11,7 @@ gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 echo "The fingerprint should be 298A3A825C0D65DFD57CBB651716619E084DAB9."
 # etc
 sudo apt install git
+sudo apt install parallel
 sudo apt install pandoc
 sudo apt install libcurl4-openssl-dev
 sudo apt install libssl-dev
