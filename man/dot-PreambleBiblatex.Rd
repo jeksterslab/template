@@ -5,7 +5,7 @@
 \title{Create Biblatex Preamble}
 \usage{
 .PreambleBiblatex(
-  path = "bib",
+  path,
   style = "apa",
   sortcites = TRUE,
   sorting = "nyt",

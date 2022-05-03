@@ -17,3 +17,4 @@ sudo apt install libcurl4-openssl-dev
 sudo apt install libssl-dev
 sudo apt install libxml2-dev
 sudo apt install libfontconfig1-dev
+sudo apt install vim

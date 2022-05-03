@@ -12,12 +12,16 @@ archlinux:
 	bash .dependencies-archlinux-dev.sh
 	bash .dependencies-archlinux-pkg.sh
 
+ubuntu:
+	bash .dependencies-ubuntu-dev.sh
+	bash .dependencies-ubuntu-pkg.sh
+
 pkg:
 	Rscript .dependencies-r-dev.R
 	Rscript .dependencies-r-pkg.R
 
 deps:
-	find R-dependencies -name \*.R -exec cp {} R \;
+	find r-dependencies -name \*.R -exec cp {} R \;
 
 style:
 	Rscript -e "styler::style_dir(exclude_dirs = c('.library', '.notes'), filetype = c('.R', '.Rmd'))"
@@ -39,8 +43,11 @@ install:
 
 lint:
 	Rscript -e "lintr::lint_dir('R')"
-	Rscript -e "lintr::lint_dir('R-dependencies')"
+	Rscript -e "lintr::lint_dir('r-dependencies')"
+	Rscript -e "lintr::lint_dir('r-writeup')"
 	Rscript -e "lintr::lint_dir('tests')"
+	Rscript -e "lintr::lint_dir('tests-benchmark')"
+	Rscript -e "lintr::lint_dir('tests-external')"
 
 cov:
 	Rscript -e "covr::package_coverage()"
@@ -57,7 +64,7 @@ latex:
 term:
 	cp .bash* ~
 	cp .vim* ~
-	bash .vimplugins
+	-bash .vimplugins
 
 rclean:
 	rm -rf .library/*

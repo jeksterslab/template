@@ -1,11 +1,11 @@
 <<include = FALSE>>=
 root <- rprojroot::is_rstudio_project
 source(
-  root$find_file(
-    "latex",
-    "r-scripts",
-    "knitr.R"
-  )
+    root$find_file(
+        "latex",
+        "r-scripts",
+        "knitr.R"
+    )
 )
 @
 
@@ -15,7 +15,10 @@ source(
 
 \Sexpr{
     .PreambleBiblatex(
-      path = root$find_file("bib")
+        path = root$find_file(
+            "latex",
+            "bib"
+        )
     )
 }
 
@@ -33,10 +36,10 @@ source(
 
 <<echo=FALSE, cache=FALSE>>=
 knitr::read_chunk(
-  root$find_file(
-    "tests-benchmark",
-    "test-benchmark-template-foo.R"
-  )
+    root$find_file(
+        "tests-benchmark",
+        "test-benchmark-template-foo.R"
+    )
 )
 @
 
@@ -49,11 +52,11 @@ knitr::read_chunk(
 
 <<echo=FALSE, cache=FALSE>>=
 source(
-  root$find_file(
-    "latex",
-    "r-scripts",
-    "tests-benchmark.R"
-  )
+    root$find_file(
+        "latex",
+        "r-scripts",
+        "tests-benchmark.R"
+    )
 )
 @
 
@@ -69,14 +72,20 @@ ls()
 
 <<>>=
 obj_i <- lapply(
-  X = ls(),
-  FUN = function(x) eval(parse(text = x))
+    X = ls(),
+    FUN = function(x) {
+        eval(
+            parse(
+                text = x
+            )
+        )
+    }
 )
 unique(
-  lapply(
-    X = obj_i,
-    FUN = class
-  )
+    lapply(
+        X = obj_i,
+        FUN = class
+    )
 )
 @
 

@@ -3,7 +3,7 @@ root <- rprojroot::is_rstudio_project
 # source R_writeup
 lapply(
   X = root$find_file(
-    "R-writeup"
+    "r-writeup"
   ),
   FUN = function(x) {
     x <- list.files(

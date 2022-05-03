@@ -2,4 +2,4 @@
 
 # Archlinux dependencies for development
 
-sudo pacman -S --needed --noconfirm gcc-fortran r pandoc git parallel
+sudo pacman -Syu --needed --noconfirm gcc-fortran r pandoc git parallel vim

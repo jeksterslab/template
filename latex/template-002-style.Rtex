@@ -1,11 +1,11 @@
 <<include = FALSE>>=
 root <- rprojroot::is_rstudio_project
 source(
-  root$find_file(
-    "latex",
-    "r-scripts",
-    "knitr.R"
-  )
+    root$find_file(
+        "latex",
+        "r-scripts",
+        "knitr.R"
+    )
 )
 @
 
@@ -15,7 +15,10 @@ source(
 
 \Sexpr{
     .PreambleBiblatex(
-      path = root$find_file("bib")
+        path = root$find_file(
+            "latex",
+            "bib"
+        )
     )
 }
 
@@ -62,8 +65,8 @@ are allowed when running \texttt{lintr}.
 
 \begin{itemize}
     \item \texttt{latex/r-scripts} for functions used to process \LaTeX~output
-    \item \texttt{R} and \texttt{R-dependencies} for functions that are part of the package
-    \item \texttt{R-writeup} for functions that are used in writeups such as manuscripts and presentations
+    \item \texttt{R} and \texttt{r-dependencies} for functions that are part of the package
+    \item \texttt{r-writeup} for functions that are used in write-ups such as manuscripts and presentations
 \end{itemize}
 
 \subsubsection{Files and Filenames}
@@ -71,7 +74,7 @@ are allowed when running \texttt{lintr}.
 \begin{itemize}
     \item use one file per function
     \item use the function name as part of the filename but convert \texttt{BigCamelCase} to lowercase using dash (\texttt{-}) as separator
-    \item for files under \texttt{R} and \texttt{R-dependencies}
+    \item for files under \texttt{R} and \texttt{r-dependencies}
         \begin{itemize}
             \item package name dash function name dot R (\texttt{template-foo.R})
             \item if the file contains an unexported function, follow the rules as usual but append the word \texttt{dot} at the end of the filename (\texttt{template-foo-dot.R})

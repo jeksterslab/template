@@ -14,9 +14,9 @@ root_folder <- basename(
     )
   )
 )
-# source R scripts in R-dependencies and R
+# source R scripts in r-dependencies and R
 lapply(
-  X = c("R-dependencies", "R"),
+  X = c("r-dependencies", "R"),
   FUN = function(x) {
     x <- list.files(
       path = root$find_file(
@@ -44,11 +44,13 @@ data_files <- list.files(
   full.names = TRUE,
   all.files = TRUE
 )
-for (i in seq_along(data_files)) {
-  load(data_files[i])
+if (length(data_files) > 0) {
+  for (i in seq_along(data_files)) {
+    load(data_files[i])
+  }
+  rm(i)
 }
 rm(
-  i,
   data_files
 )
 # other data folders

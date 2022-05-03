@@ -23,7 +23,7 @@
 #'
 #' @family Bibliography Functions
 #' @keywords texTools format internal
-.PreambleBiblatex <- function(path = "bib",
+.PreambleBiblatex <- function(path,
                               style = "apa",
                               sortcites = TRUE,
                               sorting = "nyt",
