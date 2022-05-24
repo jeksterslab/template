@@ -16,7 +16,7 @@ root_folder <- basename(
 )
 # source R scripts in r-dependencies and R
 lapply(
-  X = c("r-dependencies", "R"),
+  X = c("r-misc", "r-dependencies", "R"),
   FUN = function(x) {
     x <- list.files(
       path = root$find_file(
@@ -36,10 +36,11 @@ lapply(
   }
 )
 # load all data in data/
+data_folder <- root$find_file(
+  "data"
+)
 data_files <- list.files(
-  path = root$find_file(
-    "data"
-  ),
+  path = data_folder,
   pattern = "\\.rda$",
   full.names = TRUE,
   all.files = TRUE

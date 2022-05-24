@@ -1,12 +1,12 @@
 LatexMake <- function(clean = TRUE) {
   root <- rprojroot::is_rstudio_project
-  source(
-    root$find_file(
-      "latex",
-      "r-scripts",
-      "latex-tinytex.R"
-    )
-  )
+  # source(
+  #  root$find_file(
+  #    "latex",
+  #    "r-scripts",
+  #    "latex-tinytex.R"
+  #  )
+  # )
   source(
     root$find_file(
       "latex",
@@ -21,9 +21,9 @@ LatexMake <- function(clean = TRUE) {
       "latex-compile.R"
     )
   )
-  try(
-    LatexTinytex()
-  )
+  # try(
+  #  LatexTinytex()
+  # )
   try(
     LatexKnit()
   )

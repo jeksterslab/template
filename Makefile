@@ -1,4 +1,4 @@
-.PHONY: all archlinux pkg deps style check cran site build install lint cov xz data latex clean term rclean
+.PHONY: all archlinux pkg deps style check cran site build install lint cov xz data tinytex latex clean term rclean start
 
 all: clean pkg deps style README.md man/*.Rd check site build install
 
@@ -30,7 +30,7 @@ check:
 	Rscript -e "devtools::check(cran = FALSE)"
 
 cran:
-	Rscript -e "devtools::check()"
+	Rscript -e "rhub::check_for_cran(email = 'r.jeksterslab@gmail.com')"
 
 site:
 	Rscript -e "pkgdown::build_site()"
@@ -58,6 +58,9 @@ xz:
 data:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data')"
 
+tinytex:
+	Rscript -e "tinytex::install_tinytex(bundle = 'TinyTeX-2', force = TRUE)"
+
 latex:
 	Rscript -e "source('latex/r-scripts/latex-make.R'); LatexMake(clean = TRUE)"
 
@@ -69,6 +72,51 @@ term:
 rclean:
 	rm -rf .library/*
 	Rscript -e "remove.packages(installed.packages(priority = 'NA'))"
+
+deepclean: clean
+	@rm -rf .github
+	@rm -rf .library
+	@rm -rf .notes	
+	@rm -rf data-process
+	@rm -rf data-raw
+	@rm -rf docs
+	@rm -rf julia
+	@rm -rf latex
+	@rm -rf logs
+	@rm -rf r-dependencies
+	@rm -rf r-writeup
+	@rm -rf tests-benchmark
+	@rm -rf tests-external
+	@rm -rf tmp
+	@rm -rf _pkgdown.yml
+	@rm -rf .bash_aliases
+	@rm -rf .bash_profile
+	@rm -rf .bash_secrets
+	@rm -rf .bashrc
+	@rm -rf .clone.sh
+	@rm -rf .covrignore
+	@rm -rf .dependencies-archlinux-dev.sh
+	@rm -rf .dependencies-archlinux-pkg.sh
+	@rm -rf .dependencies-r-dev.R
+	@rm -rf .dependencies-r-pkg.R
+	@rm -rf .dependencies-ubuntu-dev.sh
+	@rm -rf .dependencies-ubuntu-pkg.sh
+	@rm -rf .dependencies-win-dev.ps1
+	@rm -rf .git
+	@rm -rf .Rbuildignore
+	@rm -rf .Renviron
+	@rm -rf .Rprofile
+	@rm -rf .vimplugins
+	@rm -rf .vimrc
+	@rm -rf latexmkrc
+	@rm -rf Makefile
+	@rm -rf NEWS.md
+	@rm -rf project.Rproj
+	@rm -rf README.Rmd
+	@rm -rf *.uuid
+	@rm -rf *.tar.gz
+
+start: term rclean pkg deps tinytex
 
 clean:
 	@rm -rf README.html

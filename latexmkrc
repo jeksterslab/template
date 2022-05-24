@@ -1,26 +1,65 @@
 $ENV{'TEXINPUTS'}='./latex//:' . $ENV{'TEXINPUTS'}; 
 
-#### Overleaf site-wide rules ####
+# Settings
+$xdvipdfmx = "xdvipdfmx -z 6 -i dvipdfmx-unsafe.cfg -o %D %O %S";
+
+# Workaround to allow pstricks transparency (https://github.com/overleaf/issues/issues/3449)
+$dvipdf = "dvipdf -dNOSAFER -dALLOWPSTRANSPARENCY %O %S %D";
+
 ###############################
 # Post processing of pdf file #
 ###############################
 
-# assume the jobname is 'output' for Overleaf v2
-my $ORIG_PDF_AGE = -M "output.pdf"; # get age of existing pdf if present
+$compiling_cmd = "internal overleaf_pre_process %T %D";
+$success_cmd = "internal overleaf_post_process %T %D";
+$failure_cmd = $success_cmd;
 
-END {
-    my $NEW_PDF_AGE = -M "output.pdf";
-    return if !defined($NEW_PDF_AGE); # bail out if no pdf file
-    return if defined($ORIG_PDF_AGE) && $NEW_PDF_AGE == $ORIG_PDF_AGE; # bail out if pdf was not updated
-    my $QPDF = "/usr/bin/qpdf";
-    return if ! -x $QPDF; # check that qpdf exists
-    my $status = system($QPDF, "--linearize", "output.pdf", "output.pdf.opt");
-    my $exitcode = ($status >> 8);
-    print "qpdf exit code=$exitcode\n";
+my $ORIG_PDF_AGE;
+
+sub overleaf_pre_process {
+    my $source_file = $_[0];
+    my $output_file = $_[1];
+
+    # get age of existing pdf if present
+    $ORIG_PDF_AGE = -M $output_file
+}
+
+sub overleaf_post_process {
+    my $source_file = $_[0];
+    my $output_file = $_[1];
+    my $source_without_ext = $source_file =~ s/\.tex$//r;
+    my $output_without_ext = $output_file =~ s/\.pdf$//r;
+
+    # Look for a knitr concordance file
+    my $concordance_file = "${source_without_ext}-concordance.tex";
+    if (-e $concordance_file) {
+        print "Patching synctex file for knitr...\n";
+        system("patchSynctex.R", $source_without_ext, $output_without_ext);
+    }
+
+    # Return early if pdf file doesn't exist or wasn't updated
+    my $NEW_PDF_AGE = -M $output_file;
+    return if !defined($NEW_PDF_AGE);
+    return if defined($ORIG_PDF_AGE) && $NEW_PDF_AGE == $ORIG_PDF_AGE;
+
+    # Figure out where qpdf is
+    $qpdf //= "/usr/bin/qpdf";
+    $qpdf = $ENV{QPDF} if defined($ENV{QPDF}) && -x $ENV{QPDF};
+    return if ! -x $qpdf;
+    $qpdf_opts //= "--linearize --newline-before-endstream";
+    $qpdf_opts = $ENV{QPDF_OPTS} if defined($ENV{QPDF_OPTS});
+
+    # Run qpdf
+    my $optimised_file = "${output_file}.opt";
+    system($qpdf, split(' ', $qpdf_opts), $output_file, $optimised_file);
+    $qpdf_exit_code = ($? >> 8);
+    print "qpdf exit code=$qpdf_exit_code\n";
+
+    # Replace the output file if qpdf was successful
     # qpdf returns 0 for success, 3 for warnings (output pdf still created)
-    return if !($exitcode == 0 || $exitcode == 3);
-    print "Renaming optimised file to output.pdf\n";
-    rename("output.pdf.opt", "output.pdf");
+    return if !($qpdf_exit_code == 0 || $qpdf_exit_code == 3);
+    print "Renaming optimised file to $output_file\n";
+    rename($optimised_file, $output_file);
 }
 
 ##############
@@ -29,7 +68,7 @@ END {
 add_cus_dep( 'glo', 'gls', 0, 'glo2gls' );
 add_cus_dep( 'acn', 'acr', 0, 'glo2gls');  # from Overleaf v1
 sub glo2gls {
-	system("makeglossaries $_[0]");
+    system("makeglossaries $_[0]");
 }
 
 #############
@@ -37,7 +76,7 @@ sub glo2gls {
 #############
 @ist = glob("*.ist");
 if (scalar(@ist) > 0) {
-        $makeindex = "makeindex -s $ist[0] %O -o %D %S";
+    $makeindex = "makeindex -s $ist[0] %O -o %D %S";
 }
 
 ################
@@ -45,30 +84,20 @@ if (scalar(@ist) > 0) {
 ################
 add_cus_dep("nlo", "nls", 0, "nlo2nls");
 sub nlo2nls {
-	system("makeindex $_[0].nlo -s nomencl.ist -o $_[0].nls -t $_[0].nlg");
+        system("makeindex $_[0].nlo -s nomencl.ist -o $_[0].nls -t $_[0].nlg");
 }
 
 #########
 # Knitr #
 #########
-my $root_file = $ARGV[-1];
-
-add_cus_dep( 'Rtex', 'tex', 0, 'rtex_to_tex');
-sub rtex_to_tex {
-    do_knitr("$_[0].Rtex");
-}
-
+add_cus_dep( 'Rtex', 'tex', 0, 'do_knitr');
 sub do_knitr {
-    my $dirname = dirname $_[0];
-    my $basename = basename $_[0];
-    system("Rscript -e \"library('knitr'); setwd('$dirname'); knit('$basename')\"");
-}
-
-my $rtex_file = $root_file =~ s/\.tex$/.Rtex/r;
-unless (-e $root_file) {
-	if (-e $rtex_file) {
-		do_knitr($rtex_file);
-	}
+    Run_subst(qq{Rscript -e '
+        library("knitr");
+        opts_knit\$set(concordance=T);
+        knitr::knit(%S, output=%D);
+        '}
+    );
 }
 
 ##########
@@ -111,7 +140,8 @@ sub mp_to_eps {
 #############
 # asymptote #
 #############
-sub asy {return system("asy --offscreen '$_[0]'");}
+
+sub asy {return system("asy \"$_[0]\"");}
 add_cus_dep("asy","eps",0,"asy");
 add_cus_dep("asy","pdf",0,"asy");
 add_cus_dep("asy","tex",0,"asy");
@@ -121,12 +151,12 @@ add_cus_dep("asy","tex",0,"asy");
 #############
 add_cus_dep('mp', '1', 0, 'mpost');
 sub mpost {
-  my $file = $_[0];
-  my ($name, $path) = fileparse($file);
-  pushd($path);
-  my $return = system "mpost $name";
-  popd();
-  return $return;
+    my $file = $_[0];
+    my ($name, $path) = fileparse($file);
+    pushd($path);
+    my $return = system "mpost $name";
+    popd();
+    return $return;
 }
 
 ##########
@@ -142,39 +172,35 @@ if (defined $ENV{'CHKTEX_OPTIONS'}) {
     my $file = basename($target);
 
     if ($file =~ /\.tex$/) {
-	# change directory for a limited scope
-	my $orig_dir = cwd();
-	my $subdir = dirname($target);
-	chdir($subdir);
-	# run chktex on main file
-	$status = system(
-    "/usr/bin/run-chktex.sh",
-    $orig_dir,
-    $file
-  );
-	# go back to original directory
-	chdir($orig_dir);
+        # change directory for a limited scope
+        my $orig_dir = cwd();
+        my $subdir = dirname($target);
+        chdir($subdir);
+        # run chktex on main file
+        $status = system("/usr/local/bin/run-chktex.sh", $orig_dir, $file);
+        # go back to original directory
+        chdir($orig_dir);
 
-	# in VALIDATE mode we always exit after running chktex
-	# otherwise we exit if EXIT_ON_ERROR is set
+        # in VALIDATE mode we always exit after running chktex
+        # otherwise we exit if EXIT_ON_ERROR is set
 
-	if ($ENV{'CHKTEX_EXIT_ON_ERROR'} || $ENV{'CHKTEX_VALIDATE'}) {
-	    # chktex doesn't let us access the error info via exit status
-	    # so look through the output
-	    open(my $fh, "<", "output.chktex");
-	    my $errors = 0;
-	    {
-		local $/ = "\n";
-		while(<$fh>) {
-		    if (/^\S+:\d+:\d+: Error:/) {
-			$errors++;
-			print;
-		    }
-		}
-	    }
-	    close($fh);
-	    exit(1) if $errors > 0;
-	    exit(0) if $ENV{'CHKTEX_VALIDATE'};
-	}
+        if ($ENV{'CHKTEX_EXIT_ON_ERROR'} || $ENV{'CHKTEX_VALIDATE'}) {
+            # chktex doesn't let us access the error info via exit status
+            # so look through the output
+            open(my $fh, "<", "output.chktex");
+            my $errors = 0;
+            {
+                local $/ = "\n";
+                while(<$fh>) {
+                    if (/^\S+:\d+:\d+: Error:/) {
+                        $errors++;
+                        print;
+                    }
+                }
+            }
+            close($fh);
+            exit(1) if $errors > 0;
+            exit(0) if $ENV{'CHKTEX_VALIDATE'};
+        }
     }
 }
