@@ -44,6 +44,3 @@
 
 # clone github repo script
 .clone.sh
-template.Rcheck/
-template*.tar.gz
-template*.tgz

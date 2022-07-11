@@ -56,7 +56,7 @@ xz:
 	Rscript -e "tools::resaveRdaFiles(paths = 'data', compress = 'xz')"
 
 data:
-	Rscript -e "tools::resaveRdaFiles(paths = 'data')"
+	Rscript -e "tools::resaveRdaFiles(paths = 'data', version = 3)"
 
 tinytex:
 	Rscript -e "tinytex::install_tinytex(bundle = 'TinyTeX-2', force = TRUE)"
