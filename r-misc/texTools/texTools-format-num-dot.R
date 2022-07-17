@@ -2,20 +2,16 @@
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
+#' @returns Returns a character string of formatted number.
+#'
 #' @param x Numeric.
 #' @param digits Integer.
 #'   Decimal places.
 #' @param nozero Logical.
 #'   If `TRUE`, no leading zeroes before the decimal point.
 #'
-#' @returns A matrix.
-#'
-#' @examples
-#' format_num(0.1092, digits = 2, nozero = FALSE)
-#' format_num(0.1092, digits = 2, nozero = TRUE)
-#' @export
-#' @family Bibliography Functions
-#' @keywords texTools format internal
+#' @family Format Functions
+#' @keywords internal
 .FormatNum <- function(x,
                        digits = 2,
                        nozero = TRUE) {

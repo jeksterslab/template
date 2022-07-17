@@ -39,8 +39,17 @@
 # Mac
 .DS_Store
 
-# .bashrc_secrets
-.bash_secrets
+# secrets
+*secrets*
 
 # clone github repo script
 .clone.sh
+
+# hpc
+hpc*
+
+# local-linux
+local-linux*
+template.Rcheck/
+template*.tar.gz
+template*.tgz

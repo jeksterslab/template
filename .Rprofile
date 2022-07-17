@@ -6,13 +6,10 @@ local({
   r["CRAN"] <- "https://cran.rstudio.com/"
   options(repos = r)
 })
-# Set environment variables
-Sys.setenv(R_LIBS_USER = ".library")
-Sys.setenv(R_ENVIRON_USER = ".Renviron")
-Sys.setenv(R_PROFILE_USER = ".Rprofile")
-Sys.setenv(R_HISTFILE = ".Rhistory")
-Sys.setenv(R_COMPLETION = TRUE)
-
+.libPaths(
+  ".library",
+  include.site = FALSE
+)
 .First <- function() {
   if (interactive()) {
     options(
@@ -30,13 +27,6 @@ Sys.setenv(R_COMPLETION = TRUE)
         sep = " | "
       )
     )
-    if (Sys.getenv("TERM") == "xterm-256color") {
-      if ("colorout" %in% rownames(utils::installed.packages())) {
-        require(
-          "colorout"
-        )
-      }
-    }
   }
 }
 .Last <- function() {

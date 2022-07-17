@@ -1,11 +1,10 @@
 # find root directory
 root <- rprojroot::is_rstudio_project
-# source start.R
+# source r-load-all/r-load-all.R
 source(
   root$find_file(
-    "latex",
-    "r-scripts",
-    "start.R"
+    "r-load-all",
+    "r-load-all.R"
   )
 )
 # run tests_external

@@ -1,7 +1,7 @@
 LatexCompile <- function(clean = TRUE) {
   root <- rprojroot::is_rstudio_project
-  tmp_folder <- root$find_file(
-    "tmp"
+  detritus_folder <- root$find_file(
+    "detritus"
   )
   pdf_folder <- root$find_file(
     "latex",
@@ -14,7 +14,7 @@ LatexCompile <- function(clean = TRUE) {
         pdf_folder,
         " ",
         paste0(
-          tmp_folder,
+          detritus_folder,
           "/*.tex"
         )
       )
@@ -52,7 +52,7 @@ LatexCompile <- function(clean = TRUE) {
     )
     unlink(
       paste0(
-        tmp_folder,
+        detritus_folder,
         "/tex-fig-*"
       ),
       recursive = TRUE

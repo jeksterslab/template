@@ -66,7 +66,9 @@ are allowed when running \texttt{lintr}.
 \begin{itemize}
     \item \texttt{latex/r-scripts} for functions used to process \LaTeX~output
     \item \texttt{R} and \texttt{r-dependencies} for functions that are part of the package
+    \item \texttt{r-misc} for useful functions but are not essential to the package
     \item \texttt{r-writeup} for functions that are used in write-ups such as manuscripts and presentations
+    \item \texttt{r-set-env} and \texttt{r-set-pkg} for functions that are used to setup the environment install packages 
 \end{itemize}
 
 \subsubsection{Files and Filenames}

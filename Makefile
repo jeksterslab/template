@@ -1,124 +1,124 @@
-.PHONY: all archlinux pkg deps style check cran site build install lint cov xz data tinytex latex clean term rclean start
+.PHONY: all root remotes dev proj env rsetup arch ubuntu win deps style lint check cran site build install rpkg cov xz data tinytex latex term hpc rclean rcleanall clean deepclean
 
-all: clean pkg deps style README.md man/*.Rd check site build install
+all: clean rsetup rpkg
 
-README.md: README.Rmd R/*.R
-	Rscript -e "rmarkdown::render('README.Rmd')"
+root:
+	@Rscript r-set-pkg/r-set-pkg-rprojroot.R
 
-man/*.Rd: R/*.R
-	Rscript -e "devtools::document()"
-	
-archlinux:
-	bash .dependencies-archlinux-dev.sh
-	bash .dependencies-archlinux-pkg.sh
+remotes:
+	@Rscript r-set-pkg/r-set-pkg-remotes.R
+
+dev:
+	@Rscript r-set-pkg/r-set-pkg-dev.R
+	@Rscript r-set-pkg/r-set-pkg-dev-github.R
+
+proj:
+	@Rscript r-set-pkg/r-set-pkg-proj.R
+	@Rscript r-set-pkg/r-set-pkg-proj-version.R
+	@Rscript r-set-pkg/r-set-pkg-proj-github.R
+
+env:
+	@Rscript r-set-env/r-set-env.R
+
+rsetup: root remotes dev proj env rclean
+
+arch:
+	@bash sys/sys-arch/sys-arch-dev.sh
+	@bash sys/sys-arch/sys-arch-proj.sh
 
 ubuntu:
-	bash .dependencies-ubuntu-dev.sh
-	bash .dependencies-ubuntu-pkg.sh
+	@echo "Building..."
 
-pkg:
-	Rscript .dependencies-r-dev.R
-	Rscript .dependencies-r-pkg.R
+win:
+	@echo "Building..."
+
+# the following assumes that the system is setup properly
+
+# R package related
 
 deps:
-	find r-dependencies -name \*.R -exec cp {} R \;
+	@find r-dependencies -name \*.R -exec cp {} R \;
+	@Rscript bin/bin.R
 
 style:
-	Rscript -e "styler::style_dir(exclude_dirs = c('.library', '.notes'), filetype = c('.R', '.Rmd'))"
-
-check:
-	Rscript -e "devtools::check(cran = FALSE)"
-
-cran:
-	Rscript -e "rhub::check_for_cran(email = 'r.jeksterslab@gmail.com')"
-
-site:
-	Rscript -e "pkgdown::build_site()"
-	
-build:
-	Rscript -e "devtools::build(path = '.')"
-
-install:
-	Rscript -e "devtools::install(pkg = '.')"
+	@Rscript -e "styler::style_dir(exclude_dirs = c('.library', '.notes'), filetype = c('.R', '.Rmd'))"
 
 lint:
-	Rscript -e "lintr::lint_dir('R')"
-	Rscript -e "lintr::lint_dir('r-dependencies')"
-	Rscript -e "lintr::lint_dir('r-writeup')"
-	Rscript -e "lintr::lint_dir('tests')"
-	Rscript -e "lintr::lint_dir('tests-benchmark')"
-	Rscript -e "lintr::lint_dir('tests-external')"
+	@Rscript -e "lintr::lint_dir('R')"
+	@Rscript -e "lintr::lint_dir('r-dependencies')"
+	@Rscript -e "lintr::lint_dir('r-writeup')"
+	@Rscript -e "lintr::lint_dir('tests')"
+	@Rscript -e "lintr::lint_dir('tests-benchmark')"
+	@Rscript -e "lintr::lint_dir('tests-external')"
+
+README.md: README.Rmd R/*.R
+	@Rscript -e "rmarkdown::render('README.Rmd')"
+
+man/*.Rd: R/*.R
+	@Rscript -e "devtools::document()"
+
+check:
+	@Rscript -e "devtools::check(cran = FALSE)"
+
+cran:
+	@Rscript -e "rhub::check_for_cran(email = 'r.jeksterslab@gmail.com')"
+
+site:
+	@Rscript -e "pkgdown::build_site()"
+
+build:
+	@Rscript -e "devtools::build(path = '.')"
+
+install:
+	@Rscript -e "devtools::install(pkg = '.')"
+
+rpkg: deps style README.md man/*.Rd check site build install
+
+# R package miscellaneous
 
 cov:
-	Rscript -e "covr::package_coverage()"
+	@Rscript -e "covr::package_coverage()"
 
 xz:
-	Rscript -e "tools::resaveRdaFiles(paths = 'data', compress = 'xz')"
+	@Rscript -e "tools::resaveRdaFiles(paths = 'data', compress = 'xz')"
 
 data:
-	Rscript -e "tools::resaveRdaFiles(paths = 'data', version = 3)"
+	@Rscript -e "tools::resaveRdaFiles(paths = 'data', version = 3)"
+
+# latex related
 
 tinytex:
-	Rscript -e "tinytex::install_tinytex(bundle = 'TinyTeX-2', force = TRUE)"
+	@Rscript -e "tinytex::install_tinytex(bundle = 'TinyTeX-2', force = TRUE)"
 
 latex:
-	Rscript -e "source('latex/r-scripts/latex-make.R'); LatexMake(clean = TRUE)"
+	@Rscript -e "source('latex/r-scripts/latex-make.R'); LatexMake(clean = TRUE)"
+	@echo "Run 'make tinytex' if the process failed."
+
+# terminal
 
 term:
-	cp .bash* ~
-	cp .vim* ~
-	-bash .vimplugins
+	@yes 2>/dev/null | cp -rf bash/.bash* ~
+	@yes 2>/dev/null | cp -rf vim/.vim* ~
+	-@bash ~/.vimplugins
 
-rclean:
-	rm -rf .library/*
-	Rscript -e "remove.packages(installed.packages(priority = 'NA'))"
+# simulation related
 
-deepclean: clean
-	@rm -rf .github
-	@rm -rf .library
-	@rm -rf .notes	
-	@rm -rf data-process
-	@rm -rf data-raw
-	@rm -rf docs
-	@rm -rf julia
-	@rm -rf latex
-	@rm -rf logs
-	@rm -rf r-dependencies
-	@rm -rf r-writeup
-	@rm -rf tests-benchmark
-	@rm -rf tests-external
-	@rm -rf tmp
-	@rm -rf _pkgdown.yml
-	@rm -rf .bash_aliases
-	@rm -rf .bash_profile
-	@rm -rf .bash_secrets
-	@rm -rf .bashrc
-	@rm -rf .clone.sh
-	@rm -rf .covrignore
-	@rm -rf .dependencies-archlinux-dev.sh
-	@rm -rf .dependencies-archlinux-pkg.sh
-	@rm -rf .dependencies-r-dev.R
-	@rm -rf .dependencies-r-pkg.R
-	@rm -rf .dependencies-ubuntu-dev.sh
-	@rm -rf .dependencies-ubuntu-pkg.sh
-	@rm -rf .dependencies-win-dev.ps1
-	@rm -rf .git
-	@rm -rf .Rbuildignore
-	@rm -rf .Renviron
-	@rm -rf .Rprofile
-	@rm -rf .vimplugins
-	@rm -rf .vimrc
-	@rm -rf latexmkrc
-	@rm -rf Makefile
-	@rm -rf NEWS.md
-	@rm -rf project.Rproj
-	@rm -rf README.Rmd
-	@rm -rf *.uuid
-	@rm -rf *.tar.gz
+hpc:
+	@cat sim/hpc/.bashrc_hpc >> ~/.bashrc
 
-start: term rclean pkg deps tinytex
+# cleaning
+
+rclean: root
+	@Rscript r-set-pkg/r-set-pkg-clean-default.R
+
+rcleanall: rclean
+	@rm -rf .library/*
 
 clean:
+	@rm -rf hpc*.err
+	@rm -rf hpc*.out
+	@rm -rf local-linux*.err
+	@rm -rf local-linux*.out
 	@rm -rf README.html
 	@rm -rf README.md
 	@rm -rf docs/*
@@ -126,4 +126,44 @@ clean:
 	@rm -rf NAMESPACE
 	@rm -rf latex/pdf/*.*
 	@rm -rf data-process/*.Rds
-	@find tmp/ -type f -not -name '.gitignore'-delete
+	@find detritus/ -type f -not -name '.gitignore' -delete
+
+deepclean: clean
+	@rm -rf .github
+	@rm -rf .library
+	@rm -rf .notes
+	@rm -rf bash
+	@rm -rf bin
+	@rm -rf data-process
+	@rm -rf data-raw
+	@rm -rf detritus
+	@rm -rf docs
+	@rm -rf julia
+	@rm -rf latex
+	@rm -rf log
+	@rm -rf r-dependencies
+	@rm -rf r-misc
+	@rm -rf r-set-env
+	@rm -rf r-set-pkg
+	@rm -rf r-writeup
+	@rm -rf sim
+	@rm -rf sys
+	@rm -rf tests-benchmark
+	@rm -rf tests-external
+	@rm -rf detritus
+	@rm -rf vim
+	@rm -rf _pkgdown.yml
+	@rm -rf .clone.sh
+	@rm -rf .covrignore
+	@rm -rf .git
+	@rm -rf .gitignore
+	@rm -rf .Rbuildignore
+	@rm -rf .Renviron
+	@rm -rf .Rprofile
+	@rm -rf latexmkrc
+	@rm -rf Makefile
+	@rm -rf NEWS.md
+	@rm -rf project.Rproj
+	@rm -rf README.Rmd
+	@rm -rf *.uuid
+	@rm -rf *.tar.gz

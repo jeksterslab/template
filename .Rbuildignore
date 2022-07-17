@@ -5,6 +5,7 @@
 .*\.md$
 .*\.sh$
 .*\.tar\.gz$
+.*\.tar\.xz$
 .*\.tgz$
 .*\.uuid$
 .*\.yml$
@@ -19,6 +20,9 @@
 ^\.library$
 ^\.notes$
 ^\.vim.*$
+^bash$
+^bin$
+^detritus$
 ^data-.*$
 ^docs$
 ^julia$
@@ -26,8 +30,11 @@
 ^latexmkrc$
 ^logs$
 ^r-.*$
+^sim$
+^sys$
 ^tests-.*$
 ^tmp$
+^vim$
 ^template\.Rcheck$
 ^template.*\.tar\.gz$
 ^template.*\.tgz$

@@ -61,11 +61,11 @@ data_raw_folder <- root$find_file(
 data_process_folder <- root$find_file(
   "data-process"
 )
-# tmp
-tmp_folder <- root$find_file(
-  "tmp"
+# detritus
+detritus_folder <- root$find_file(
+  "detritus"
 )
-# logs
-logs_folder <- root$find_file(
-  "logs"
+# log
+log_folder <- root$find_file(
+  "log"
 )
